@@ -3,6 +3,15 @@
 __pycache__/
 *.pyc
 
-# Jupyter Notebook
+# jupyter notebook
 .ipynb_checkpoints/
+notebooks/
 *.ipynb
+start_notebook.sh
+
+# logs
+logs/
+*.log
+
+# other
+private_info/
