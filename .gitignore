@@ -1,0 +1,8 @@
+# cache
+.DS_Store
+__pycache__/
+*.pyc
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
