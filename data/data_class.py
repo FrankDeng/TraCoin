@@ -15,7 +15,7 @@ class Data(object):
         logger.info('Saving live feed data into database')
         session, _ = start_session()
 
-        for data_type in self.models.keys():
+        for data_type in data_dict.keys():
             insert_bulk(session, self.models[data_type], data_dict[data_type])
 
         close_session(session)

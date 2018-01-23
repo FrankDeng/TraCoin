@@ -4,12 +4,14 @@ from argparse import ArgumentParser
 from logger import logger
 from utils import start_session, create_table, close_session
 
-from models import GeminiPrice
+from models import GeminiPrice, GeminiOrderBook, GeminiTrades
 
 
 def create_models(drop=False):
     session, engine = start_session()
     create_table(engine, GeminiPrice, drop=drop)
+    create_table(engine, GeminiOrderBook, drop=drop)
+    create_table(engine, GeminiTrades, drop=drop)
     close_session(session)
 
 

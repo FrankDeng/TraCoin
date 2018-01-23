@@ -1,3 +1,4 @@
+import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -5,6 +6,7 @@ from logger import logger
 from settings import SQL_URI
 
 
+# SQL ORM wrapper
 def start_session():
     logger.info('Starting database session')
     engine = create_engine(SQL_URI, echo=True)
@@ -36,3 +38,8 @@ def close_session(session):
     logger.info('Committing changes and closing database session')
     session.commit()
     session.close()
+
+
+# convert epoch to utc datetime
+def _to_utc(timestamp):
+    return datetime.datetime.utcfromtimestamp(timestamp)

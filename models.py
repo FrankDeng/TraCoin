@@ -5,14 +5,34 @@ Base = declarative_base()
 
 
 # Create models here
-class GeminiPrice(Base):
-    __tablename__ = 'gemini_price'
-
+class ModelBase(object):
     id = Column(Integer, primary_key=True, autoincrement=True)
     ticker = Column(String)
-    observation_time = Column(DateTime)
+    utc_time = Column(DateTime)
+    last_update = Column(DateTime, default=datetime.datetime.utcnow)
+
+
+# Gemini models
+class GeminiPrice(ModelBase, Base):
+    __tablename__ = 'gemini_price'
+
     last = Column(Float)
     bid = Column(Float)
     ask = Column(Float)
     volume = Column(Float)
-    las_update = Column(DateTime, default=datetime.datetime.utcnow())
+
+
+class GeminiOrderBook(ModelBase, Base):
+    __tablename__ = 'gemini_order_book'
+
+    side = Column(String)
+    price = Column(Float)
+    amount = Column(Float)
+
+
+class GeminiTrades(ModelBase, Base):
+    __tablename__ = 'gemini_trades'
+
+    side = Column(String)
+    price = Column(Float)
+    amount = Column(Float)
