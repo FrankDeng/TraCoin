@@ -2,18 +2,19 @@
 ```
 TraCoin/
     |---- data/
-    |        |---- data_base.py
+    |        |---- data_class.py
     |        |---- cryptocompare/
     |        |---- gemini/
     |        |---- ib/
+    |---- generate_data.py
     |
     |---- api/
-    |        |---- api_base.py
+    |        |---- api_class.py
     |        |---- gemini/
     |        |---- ib/
     |
     |---- trader/
-    |        |---- trader_base.py
+    |        |---- trader_class.py
     |        |---- strat_1.py
     |        |---- strat_2.py
     |        |---- ......
@@ -29,11 +30,12 @@ TraCoin/
 
 Data module provides interfaces to several data source APIs.
 
-1. historical data api
-   - cryptocompare: daily OHLC & volume data, minute price data (7 days)
-2. live data feed
-   - gemini: current auction data and order book information
-   - ib: TBD
+###### commands
+
+```shell
+# create all tables and drop existing ones
+python generate_data --create --drop
+```
 
 ### api module
 

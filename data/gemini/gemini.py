@@ -20,6 +20,17 @@ class Gemini(Data):
             'trades': GeminiTrades,
         }
 
+    def connect_data_api(self, endpoint):
+        """A common method to use Gemini public API with certain endpoint."""
+
+        url = 'https://api.gemini.com' + endpoint
+        res = requests.get(url)
+
+        if res.status_code == 200:
+            return json.loads(res.content)
+        else:
+            raise ValueError(res.content)
+
     def fetch_data(self):
         """fetch_data implements the method to fetch live feed through API, including
         1. current price
@@ -39,7 +50,7 @@ class Gemini(Data):
         for ticker in GEMINI_UNIVERSE:
             logger.info('Fetching current price: {}'.format(ticker))
             endpoint = '/v1/pubticker/{}'.format(ticker)
-            data = self._connect_data_api(endpoint)
+            data = self.connect_data_api(endpoint)
 
             prices += [{
                 'ticker': ticker,
@@ -57,7 +68,7 @@ class Gemini(Data):
         for ticker in GEMINI_UNIVERSE:
             logger.info('Fetching current order book: {}'.format(ticker))
             endpoint = '/v1/book/{}'.format(ticker)
-            data = self._connect_data_api(endpoint)
+            data = self.connect_data_api(endpoint)
 
             asks = [{
                 'side': 'asks',
@@ -82,7 +93,7 @@ class Gemini(Data):
         for ticker in GEMINI_UNIVERSE:
             logger.info('Fetching recent trades: {}'.format(ticker))
             endpoint = '/v1/trades/{}?limit_trades=500'.format(ticker)
-            data = self._connect_data_api(endpoint)
+            data = self.connect_data_api(endpoint)
 
             trades += [{
                 'ticker': ticker,
@@ -93,14 +104,3 @@ class Gemini(Data):
             } for x in data]
 
         return trades
-
-    def _connect_data_api(self, endpoint):
-        """A common method to connect to Gemini public API"""
-
-        url = 'https://api.gemini.com' + endpoint
-        res = requests.get(url)
-
-        if res.status_code == 200:
-            return json.loads(res.content)
-        else:
-            raise ValueError(res.content)

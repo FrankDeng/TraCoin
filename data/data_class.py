@@ -22,5 +22,9 @@ class Data(object):
         return data_dict
 
     @abstractmethod
+    def connect_data_api(self):
+        raise NotImplementedError("Must implement connect_data_api() method!")
+
+    @abstractmethod
     def fetch_data(self):
         raise NotImplementedError("Must implement fetch_data() method!")
