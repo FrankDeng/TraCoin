@@ -1,14 +1,23 @@
+import os
 import logging
 import datetime
+
+FILENAME = 'logs/{}.log'.format(datetime.datetime.today().strftime('%Y%m%d'))
 
 
 class Logger(object):
     def __init__(self):
+        if not os.path.exists('logs'):
+            os.mkdir('logs')
+
+        if not os.path.exists(FILENAME):
+            open(FILENAME, 'w+').close()
+
         logging.basicConfig(
             format='%(asctime)s.%(msecs)03d %(name)s %(levelname)s: %(message)s',
             datefmt='%Y-%m-%d %H:%M:%S',
             level=logging.DEBUG,
-            filename='logs/{}.log'.format(datetime.datetime.today().strftime('%Y%m%d')),
+            filename=FILENAME,
             filemode='a'
         )
         self.logger = logging.getLogger('TRACOIN')
