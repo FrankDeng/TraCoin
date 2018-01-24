@@ -41,6 +41,7 @@ class Gemini(Data):
         data_dict = {
             'price': self.get_current_price(),
             'order_book': self.get_order_book(),
+            'trades': self.get_trades(),
         }
 
         return self.save_data(data_dict)
@@ -92,7 +93,7 @@ class Gemini(Data):
         trades = []
         for ticker in GEMINI_UNIVERSE:
             logger.info('Fetching recent trades: {}'.format(ticker))
-            endpoint = '/v1/trades/{}?limit_trades=500'.format(ticker)
+            endpoint = '/v1/trades/{}?limit_trades=250'.format(ticker)
             data = self.connect_data_api(endpoint)
 
             trades += [{
