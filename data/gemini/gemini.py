@@ -1,5 +1,4 @@
 import requests
-import datetime
 
 from logger import logger
 from constants import GEMINI_UNIVERSE
