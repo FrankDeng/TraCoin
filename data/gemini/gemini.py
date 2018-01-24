@@ -1,5 +1,4 @@
 import requests
-import json
 import datetime
 
 from logger import logger
@@ -14,6 +13,7 @@ class Gemini(Data):
     """Gemini provides the interface to fetch live data from Gemini through public API."""
 
     def __init__(self):
+        self.source = 'gemini'
         self.models = {
             'price': GeminiPrice,
             'order_book': GeminiOrderBook,
@@ -27,7 +27,7 @@ class Gemini(Data):
         res = requests.get(url)
 
         if res.status_code == 200:
-            return json.loads(res.content)
+            return res.json()
         else:
             raise ValueError(res.content)
 
@@ -35,6 +35,7 @@ class Gemini(Data):
         """fetch_data implements the method to fetch live feed through API, including
         1. current price
         2. current order book
+        3. recent 250 rows of trades
 
         Fetched data are saved into database automatically and returned in jsonified form."""
 
@@ -60,6 +61,7 @@ class Gemini(Data):
                 'bid': float(data['bid']),
                 'ask': float(data['ask']),
                 'volume': float(data['volume']['USD']),
+                'source': self.source,
             }]
 
         return prices
@@ -77,6 +79,7 @@ class Gemini(Data):
                 'utc_time': _to_utc(float(x['timestamp'])),
                 'price': float(x['price']),
                 'amount': float(x['amount']),
+                'source': self.source,
             } for x in data['asks']]
             bids = [{
                 'side': 'bids',
@@ -84,6 +87,7 @@ class Gemini(Data):
                 'utc_time': _to_utc(float(x['timestamp'])),
                 'price': float(x['price']),
                 'amount': float(x['amount']),
+                'source': self.source,
             } for x in data['bids']]
             order_book += asks + bids
 
@@ -102,6 +106,7 @@ class Gemini(Data):
                 'side': x['type'],
                 'price': float(x['price']),
                 'amount': float(x['amount']),
+                'source': self.source,
             } for x in data]
 
         return trades

@@ -9,6 +9,7 @@ class ModelBase(object):
     id = Column(Integer, primary_key=True, autoincrement=True)
     ticker = Column(String)
     utc_time = Column(DateTime)
+    source = Column(String)
     last_update = Column(DateTime, default=datetime.datetime.utcnow)
 
 
