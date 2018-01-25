@@ -13,6 +13,7 @@ class GDAX(Data):
     """GDAX provides the interface to fetch live data from GDAX through public API."""
 
     def __init__(self):
+        Data.__init__(self)
         self.source = 'gdax'
 
     def connect_data_api(self, endpoint):

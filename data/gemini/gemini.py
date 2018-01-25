@@ -11,6 +11,7 @@ class Gemini(Data):
     """Gemini provides the interface to fetch live data from Gemini through public API."""
 
     def __init__(self):
+        Data.__init__(self)
         self.source = 'gemini'
 
     def connect_data_api(self, endpoint):

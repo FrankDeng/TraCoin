@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 from logger import logger
 from utils import start_session, insert_bulk, close_session
 
-from models import GDAXPrice, GDAXOrderBook, GDAXTrades, GDAXHistorical
+from models import CurrentPrice, OrderBook, RecentTrades, HistoricalPrices
 
 
 class Data(object):
@@ -13,12 +13,13 @@ class Data(object):
 
     __metaclass__ = ABCMeta
 
-    self.models = {
-        'prices': CurrentPrice,
-        'order_book': OrderBook,
-        'trades': RecentTrades,
-        'historical': HistoricalPrices,
-    }
+    def __init__(self):
+        self.models = {
+            'price': CurrentPrice,
+            'order_book': OrderBook,
+            'trades': RecentTrades,
+            'historical': HistoricalPrices,
+        }
 
     def save_data(self, data_dict):
         logger.info('Saving live feed data into database')

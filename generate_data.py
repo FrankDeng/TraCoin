@@ -19,7 +19,7 @@ def create_models(drop=False):
 
 def fetch_live_data(models):
     for k, model in enumerate(models):
-        if args.model not in MODEL_MAPPING.keys():
+        if model not in MODEL_MAPPING.keys():
             logger.error('Invalid data source!')
             raise ValueError('Invalid data source!')
 
