@@ -13,9 +13,9 @@ class ModelBase(object):
     last_update = Column(DateTime, default=datetime.datetime.utcnow)
 
 
-# Gemini models
-class GeminiPrice(ModelBase, Base):
-    __tablename__ = 'gemini_price'
+# live data models
+class CurrentPrice(ModelBase, Base):
+    __tablename__ = 'current_prices'
 
     last = Column(Float)
     bid = Column(Float)
@@ -23,50 +23,25 @@ class GeminiPrice(ModelBase, Base):
     volume = Column(Float)
 
 
-class GeminiOrderBook(ModelBase, Base):
-    __tablename__ = 'gemini_order_book'
+class OrderBook(ModelBase, Base):
+    __tablename__ = 'order_book'
 
     side = Column(String)
     price = Column(Float)
     amount = Column(Float)
 
 
-class GeminiTrades(ModelBase, Base):
-    __tablename__ = 'gemini_trades'
+class RecentTrades(ModelBase, Base):
+    __tablename__ = 'recent_trades'
 
     side = Column(String)
     price = Column(Float)
     amount = Column(Float)
 
 
-# GDAX models
-class GDAXPrice(ModelBase, Base):
-    __tablename__ = 'gdax_price'
-
-    last = Column(Float)
-    bid = Column(Float)
-    ask = Column(Float)
-    volume = Column(Float)
-
-
-class GDAXOrderBook(ModelBase, Base):
-    __tablename__ = 'gdax_order_book'
-
-    side = Column(String)
-    price = Column(Float)
-    amount = Column(Float)
-
-
-class GDAXTrades(ModelBase, Base):
-    __tablename__ = 'gdax_trades'
-
-    side = Column(String)
-    price = Column(Float)
-    amount = Column(Float)
-
-
-class GDAXHistorical(ModelBase, Base):
-    __tablename__ = 'gdax_historical'
+# historical data models
+class HistoricalPrices(ModelBase, Base):
+    __tablename__ = 'historical_prices'
 
     open = Column(Float)
     high = Column(Float)

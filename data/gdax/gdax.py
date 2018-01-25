@@ -7,7 +7,6 @@ from constants import GDAX_UNIVERSE
 from utils import _to_utc
 
 from data.data_class import Data
-from models import GDAXPrice, GDAXOrderBook, GDAXTrades, GDAXHistorical
 
 
 class GDAX(Data):
@@ -15,12 +14,6 @@ class GDAX(Data):
 
     def __init__(self):
         self.source = 'gdax'
-        self.models = {
-            'price': GDAXPrice,
-            'order_book': GDAXOrderBook,
-            'trades': GDAXTrades,
-            'historical': GDAXHistorical,
-        }
 
     def connect_data_api(self, endpoint):
         """A common method to use Gemini public API with certain endpoint."""

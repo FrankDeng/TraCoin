@@ -5,21 +5,27 @@ from logger import logger
 from mapping import MODEL_MAPPING
 from utils import start_session, create_table, close_session
 
-from models import GeminiPrice, GeminiOrderBook, GeminiTrades
+from models import CurrentPrice, OrderBook, RecentTrades, HistoricalPrices
 
 
 def create_models(drop=False):
     session, engine = start_session()
-    create_table(engine, GeminiPrice, drop=drop)
-    create_table(engine, GeminiOrderBook, drop=drop)
-    create_table(engine, GeminiTrades, drop=drop)
+    create_table(engine, CurrentPrice, drop=drop)
+    create_table(engine, OrderBook, drop=drop)
+    create_table(engine, RecentTrades, drop=drop)
+    create_table(engine, HistoricalPrices, drop=drop)
     close_session(session)
 
 
-def fetch_live_data(model):
-    logger.info('Fetch live data: {}'.format(model))
-    obj = MODEL_MAPPING[model]()
-    obj.fetch_data()
+def fetch_live_data(models):
+    for k, model in enumerate(models):
+        if args.model not in MODEL_MAPPING.keys():
+            logger.error('Invalid data source!')
+            raise ValueError('Invalid data source!')
+
+        logger.info('Fetch live data: {} ({}/{})'.format(model, str(k+1), str(len(models))))
+        obj = MODEL_MAPPING[model]()
+        obj.fetch_data()
 
 
 def build_parser():
@@ -39,8 +45,8 @@ def build_parser():
         '-l', '--live', action='store_true',
         help='Fetch live data')
     data_group.add_argument(
-        '-m', '--model',
-        help='Data source model')
+        '-m', '--model', type=str, nargs='+',
+        help='Data source models')
     return parser
 
 
@@ -59,7 +65,5 @@ if __name__ == '__main__':
 
     # fetch live data
     elif args.live:
-        if args.model not in MODEL_MAPPING.keys():
-            logger.error('Invalid data source!')
-            raise ValueError('Invalid data source!')
-        fetch_live_data(args.model)
+        models = [args.model] if type(args.model) == str else args.model
+        fetch_live_data(models)
