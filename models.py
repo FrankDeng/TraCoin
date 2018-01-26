@@ -48,3 +48,22 @@ class HistoricalPrices(ModelBase, Base):
     low = Column(Float)
     close = Column(Float)
     volume = Column(Float)
+
+
+# exchange account data
+class AccountBalance(Base):
+    __tablename__ = 'account_balance'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    exchange = Column(String)
+    balance = Column(Float)
+    last_update = Column(DateTime, default=datetime.datetime.utcnow)
+
+
+class AccountHolding(object):
+    __tablename__ = 'account_holding'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    ticker = Column(String)
+    position = Column(Float)
+    last_update = Column(DateTime, default=datetime.datetime.utcnow)

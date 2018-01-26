@@ -7,7 +7,7 @@ from utils import _to_utc
 from data.data_class import Data
 
 
-class InteractiveBrokers(Data):
+class InteractiveBrokersData(Data):
     """InteractiveBrokers provides the interface to fetch live data from IB through unofficial API."""
 
     def __init__(self):

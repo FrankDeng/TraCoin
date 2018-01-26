@@ -7,7 +7,7 @@ from utils import _to_utc
 from data.data_class import Data
 
 
-class Gemini(Data):
+class GeminiData(Data):
     """Gemini provides the interface to fetch live data from Gemini through public API."""
 
     def __init__(self):

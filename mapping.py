@@ -1,7 +1,7 @@
-from data.gemini.gemini import Gemini
-from data.gdax.gdax import GDAX
+from data.gemini.gemini import GeminiData
+from data.gdax.gdax import GDAXData
 
 MODEL_MAPPING = {
-    'gemini': Gemini,
-    'gdax': GDAX,
+    'gemini': GeminiData,
+    'gdax': GDAXData,
 }
