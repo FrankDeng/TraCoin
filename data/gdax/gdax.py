@@ -9,7 +9,7 @@ from utils import _to_utc
 from data.data_class import Data
 
 
-class GDAX(Data):
+class GDAXData(Data):
     """GDAX provides the interface to fetch live data from GDAX through public API."""
 
     def __init__(self):
@@ -17,7 +17,7 @@ class GDAX(Data):
         self.source = 'gdax'
 
     def connect_data_api(self, endpoint):
-        """A common method to use Gemini public API with certain endpoint."""
+        """A common method to use GDAX public API with certain endpoint."""
 
         url = 'https://api.gdax.com' + endpoint
         res = requests.get(url)
