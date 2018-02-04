@@ -2,7 +2,7 @@ import sys
 from argparse import ArgumentParser
 
 from logger import logger
-from mapping import MODEL_MAPPING
+from mapping import DATA_MODELS
 from utils import start_session, create_table, close_session
 
 from models import CurrentPrice, OrderBook, RecentTrades, HistoricalPrices
@@ -19,12 +19,12 @@ def create_models(drop=False):
 
 def fetch_live_data(models):
     for k, model in enumerate(models):
-        if model not in MODEL_MAPPING.keys():
+        if model not in DATA_MODELS.keys():
             logger.error('Invalid data source!')
             raise ValueError('Invalid data source!')
 
         logger.info('Fetch live data: {} ({}/{})'.format(model, str(k+1), str(len(models))))
-        obj = MODEL_MAPPING[model]()
+        obj = DATA_MODELS[model]()
         obj.fetch_data()
 
 
