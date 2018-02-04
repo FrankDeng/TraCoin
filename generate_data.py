@@ -2,18 +2,15 @@ import sys
 from argparse import ArgumentParser
 
 from logger import logger
-from mapping import DATA_MODELS
+from mapping import DB_TABLES, DATA_MODELS
 from utils import start_session, create_table, close_session
 
-from models import CurrentPrice, OrderBook, RecentTrades, HistoricalPrices
 
-
-def create_models(drop=False):
+def create_models(tables, drop=False):
     session, engine = start_session()
-    create_table(engine, CurrentPrice, drop=drop)
-    create_table(engine, OrderBook, drop=drop)
-    create_table(engine, RecentTrades, drop=drop)
-    create_table(engine, HistoricalPrices, drop=drop)
+    for table in tables:
+        logger.info('Creating table: {} ({}/{})'.format(table, str(k+1), str(len(tables))))
+        create_table(engine, DB_TABLES[table], drop=drop)
     close_session(session)
 
 
@@ -39,6 +36,9 @@ def build_parser():
     create_group.add_argument(
         '--drop', action='store_true',
         help='Drop existing models')
+    create_group.add_argument(
+        '-t', '--table', type=str, nargs='+',
+        help='Database tables to be created')
 
     data_group = parser.add_argument_group('data', 'Fetch live data')
     data_group.add_argument(
@@ -61,6 +61,7 @@ if __name__ == '__main__':
 
     # create models
     if args.create:
+        tables = [args.table] if type(args.table) == str else args.table
         create_models(drop=args.drop)
 
     # fetch live data
