@@ -1,35 +1,22 @@
-# TraCoin data
+# TraCoin strategy
 
 ```
-data/
-    |---- data_class.py
+strategy/
+    |---- strategy_class.py
     |
-    |---- gemini/
-    |        |---- gemini.py
+    |---- strategy_xxx/
+    |        |---- strategy_xxx.py
+    |        |---- strategy_xxx_constants.py
+    |        |---- strategy_xxx_utils.py
     |
     |----......
 ```
 
 ### abstract base class
 
-The `Data` class in `data_class.py` provides an abstract base class as interface to a certain data source. The base class implements
+The `Strategy` class in `strategy_class.py` provides an abstract base class as interface to a certain trading strategy.
 
-1. `save_data`, which writes the data into database
+Each strategy is encapsulated as a derived class from `Strategy`, with methods required to be implemented
 
-Each data source are encapsulated as a derive class from `Data`, with methods required to be implemented
-
-1. `connect_data_api`: a generic method to connect to source API with certain parameters specified, e.g. url endpoint or headers
-2. `fetch_data`: fetch all data wanted, save to database and return clean and jsonified data
-
-### data sources
-
-1. Gemini
-   - historical data
-     - 500 rows of recent trades
-   - live data
-     - current price
-     - current order book information
-2. Cryptocompare
-   - TBD
-3. Interactive Brokers
-   - TBD
+1. `get_data`: a generic method to fetch required data for signal generation through an instance of `DataHandler`
+2. `generate_positions`: generate target positions in form of ticker-percentage pairs
